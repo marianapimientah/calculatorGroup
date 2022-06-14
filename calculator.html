@@ -1,0 +1,227 @@
+<html> <!--Iniciamos la configuración de la página*/-->
+<head> <!--Empezamos a modificar el encabezado de la página*/-->
+    <div id="hImg"> <!--En este espacio agregramos la imagen del logo de la universidad*/-->
+
+        <img src="headImg.png" alt="LogoU" width="270"> <!--En este espacio importamos la imagen y ajustamos el ancho de esta*/-->
+    </div> <!--Fin de la configuración para el espacio destinado a la imagen del logo de la universidad*/-->
+    <center> <!--Indicación para centrar el contenido que sigue*/--> 
+    <div id = "titleHead"> <!--Abrimos el espacio para agregar el titulo principal, adicional se le agrega un identificador*/-->
+        <h4>Calculadora - Ingeniería de Software 12a</h4> <!--Agregamos el contenido del título principal*/-->
+    </div> <!--Se cierra el espacio destinado al título principal*/-->
+    </center> <!--Finalización de la indicación centrar*/-->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!--En este espacio agregramos los links para poder implementar una fuente de letra*/-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!--Link para implementar una fuente de letra*/-->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet"> <!--Link para implementar una fuente de letra*/-->    
+    <style> /*Inicialización de espacio para darle estilo a la calculadora*/
+
+        #hImg { /*Aquí aplicamos style a la caja que contiene la imagen del logo de la universidad para posicionarla donde se desea*/
+            margin-left: 25px; /*Establecemos la margen izquierda*/
+            margin-top: 25px; /*Establecemos la margen superior*/
+        }
+
+        input[type=button] /*Aquí aplicamos estilo a los botones*/
+        {
+            background-color: #e8e8e8; /*Elegimos el color de fondo de los botones*/
+            border: none; /*Eliminamos el border*/
+            color: black; /*Asignamos color negro al text de los botones*/
+            font-weight: bold; /*Ponemos la letra en negrita*/
+            padding: 6px 20px; /*Elegimos las dimensiones de margen interna*/
+            text-align: center; /*Elegimos una alineación centrada para el texto*/
+            text-decoration: none; /*Eliminamos las decoraciones en el texto*/
+            display: inline-block; /*Designamos los bloques en linea*/
+            font-size: 20px; /*Elegimos el tamaño del texto*/
+            margin: 4px 4px; /*Elegimos las dimensiones de la margen top y left*/
+            cursor: pointer; /*Elegimos el cursor*/
+            box-shadow: 1px 1px 1px black; /*Configuramos las sombras de los botones*/
+            border-radius: 20px 20px 20px 20px; /*Escogemos las dimensiones para redondear las esquinas de los botones*/
+            align-items: center; /*Se establece alineación centrada para el contenido interno*/
+        }
+
+        input[type="text"] /*Aquí aplicamos estilo a la pantalla de la calculadora y al input text*/
+        {
+            border: solid; /*Configuramos el borde como sólido*/
+            color: black; /*Elige el color negro para txt*/
+            padding: 15px 32; /*Escogemos las dimensiones de la margen interna*/
+            text-align: right; /*Establecemos alineación derecha para el texto*/
+            text-decoration: none; /*Eliminamos las decoraciones del texto*/
+            display: inline-block; /*Designamos los bloques en linea*/
+            font-size: 16px; /*Se establece el tamaño de la letra*/
+            margin: 4px 2px; /*Ajustamos las dimensiones de la margen top y left*/
+            cursor: pointer; /*Se establece el cursor*/
+            width: 98%; /*Elegimos el ancho de la pantalla*/
+            border-radius: 20px 20px 20px 20px; /*Escogemos las dimensiones para redondear las esquinas de los botones*/
+        }
+
+        body /*Aquí aplicamos estilo al cuerpo general*/
+        {
+            background-color: #bbeff2; /*Seleccionamos un color para el fondo*/
+            font-family:'Source Sans Pro', sans-serif; /*Aplicamos la fuente relacionada a los links del principio*/
+            font-size: 25px; /*Establecemos el tamaño de la letra*/
+        }
+
+        table /*Aquí aplicamos estilo al cuerpo de la calculadora*/
+        {
+            background-color: white; /*Seleccionamos blanco como color de fondo*/
+            padding: 5px 5px; /*Modificamos el tamaño del relleno*/
+            margin: 5%; /*Configuramos la dimension de la margen*/
+        }
+
+        #titleFooter /*Aquí aplicamos estilo al pie de pagina*/
+        {
+            font-family:'Source Sans Pro', sans-serif; /*Aplicamos la fuente relacionada a los links del principio*/
+            font-size: 13.4px; /*Establecemos el tamaño de la letra*/
+            margin-top: 130px; /*Configuramos la dimension del margen superior*/
+        }
+
+    </style><!--Finalización de espacio para darle estilo a la calculadora-->
+
+    <script type="text/javascript"> //Aquí empezamos a programar las funcionalidades de la calculadora con JavaScript
+
+        //Aquí declaramos las variables
+        var numberScreen="0"; //Creamos la variable numberScreen, esta registrará los datos que se encuentren en el cuadro de texto 
+        var screenWithNumber="si"; //Boolean ////Creamos la variable screenWithNumber para saber si se está mostrando un número o no 
+        var usePoint="no"; //Boolean // Creamos la variable usePoint para verificar si ya se ingreso punto
+        var expectedNumber=0; //Creamos la variable expectedNumber para establecer el número que se mostrará cuando el usuario aún no haya ingresado ningún valor
+        var pendingOperation=""; //Creamos la variable pendingOperation para definir la operación según el operador ingresado
+        var solution=""; //Creamos la variable solution para almacenar en forma de cadena el primer valor ingresado, la operación y el segundo valor (según el caso) con el fin de arrojar un resultado 
+ 
+        function enterNumber(x) //Creamos la función enterNumber que nos permitirá mostrar los números en la pantalla 
+        { //Inicialización de condición
+            if(x!=".") //Establecemos la condición para que el valor ingresado no sea un punto
+            { //En caso de que esto se cumpla:
+                if(numberScreen=="0" || screenWithNumber=="si") //Establecemos dos condiciones posibles para verificar si la pantalla contiene un numero
+                    {
+                        document.Calculation.txtScreenNumros.value=x; //Declaración de valor ingresado(x)
+                        numberScreen=x;//Mostrar en pantalla(x)
+                    }
+                else if(x!=".") //Establecemos segunda condición para que el valor ingresado no sea un punto
+                    {
+                        document.Calculation.txtScreenNumros.value+=x; //Declaración suma(x)
+                        numberScreen+=x; //Declaración suma (numero ingresado + x)
+                    }
+            } //Finalización de condición
+
+            if(x=="." && usePoint=="no" && numberScreen=="0") //Declaración lógica en la que todas las condiciones impuestas se tienen que cumplir
+                { //Si en la pantalla se registra un punto y un cero, hacer:
+                    document.Calculation.txtScreenNumros.value="0."; //Agregar 0. en pantalla
+                    numberScreen=x; //Retornar x como numero en pantalla
+                    usePoint="si"; //Afirmar que se esta usando punto
+                }	
+            else if(x=="." && usePoint=="no") //Declaración lógica en la que todas las condiciones impuestas se tienen que cumplir
+                { //Si en la pantalla se registra un punto hacer:
+
+                    document.Calculation.txtScreenNumros.value +=x;
+                    numberScreen +=x; //Sumar x a numero en pantalla
+                    usePoint="si"; //Afirmar que se esta usando punto
+                }
+            else if(x=="." && usePoint=="si") //Declaración lógica en la que todas las condiciones impuestas se tienen que cumplir
+            {
+            }
+            screenWithNumber="no"; //No retornar numero en pantalla si se cumple dos veces la misma condición
+        } //Se cierra la función enterNumber(x)
+
+        function enterOperation(y) //Creamos la función enterOperation que nos permitirá realizar las operaciones 
+        { //Inicialización de condición
+            if(pendingOperation =="") //Verificar si es la primera vez que se introduce una operación  
+            { //Si es así, entonces:
+                expectedNumber=document.Calculation.txtScreenNumros.value; // Declarar como iguales número en pantalla y numero esperado 
+                document.Calculation.txtScreenNumros.value +=y; //Operar numero esperado con segundo numero esperado(y)
+                pendingOperation = y; //Declarar y como operacion pendiente
+                screenWithNumber = "no"; //No se registra numero en pantalla
+                numberScreen = ""; //Habilitar ingreso de numero a la pantalla
+                usePoint = "no"; //Negar uso de punto
+                _
+            } //Se cierra la condición 
+        } //Se cierra la función enterOperation(y)
+
+        function result() //Creamos una función que nos permitirá calcular el resultado final de las operaciones 
+        {
+            if(pendingOperation != "") //Verificamos que exista contenido en operación pendiente
+            { //Si es así, entonces:
+                solution=expectedNumber+pendingOperation+numberScreen; //Sumatoria valores ingresados y declarados
+                document.Calculation.txtScreenNumros.value=eval(solution); //Asignación para retornar solucion
+                numberScreen=eval(solution); //Asignamos como iguales numero en pantalla y solucion para arrojar resultado en pantalla
+                screenWithNumber="si"; //Conseguir obligatoria existencia de un valor en pantalla
+                pendingOperation = ""; //Establecer funcion
+                usePoint = "no"; //Negar uso de punto
+            } //Se cierra la condición 
+        } //Se cierra la función result()
+
+        function squareRoot() //Creamos una función que nos permitirá calcular las raíces cuadradas de los números
+        { //Creamos una condición 
+            if(pendingOperation == "") //Verificamos si hay una operación pendiente
+            { //Si es así, entonces: 
+                document.Calculation.txtScreenNumros.value=Math.sqrt(numberScreen); //Se establece la operación para calcular la raíz cuadrada del número ingresado
+                screenWithNumber = "no"; //Se restablece la variable screenWithNumber
+                usePoint = "no"; //Negar uso de punto
+            } //Se cierra la condición 
+        } //Se cierra la función squareRoot()
+
+        function clearScreen() //Creamos la función clearScreen para borrar todos los valores en pantalla
+        { //Esta función va a:
+            numberScreen="0"; //Cambiar el número en pantalla a 0
+            screenWithNumber="si"; //Reestablecer la variable screenWithNumber
+            usePoint="no"; //Negar uso de punto
+            expectedNumber=0; //Asignar valor cero a numero esperado
+            pendingOperation=""; //Vaciar operaciones
+            solution=""; //Vaciar soluciones
+            document.Calculation.txtScreenNumros.value="0"; //Establecer valores en 0
+        }
+
+    //Finalización de programación con JavaScript    
+    </script> 
+</head> <!--Terminamos de modificar el encabezado de la página*/-->
+<body> <!--Empezamos a modificar el cuerpo de la calculadora*/-->
+<center> <!--Intrucción para centrar el contenido que sigue*/-->
+
+<form name="Calculation"> <!--Inicialización de estructura formulario y asignación de nombre “Calculadora” al documento*/-->
+<table border="3"> <!--Inicializamos estructura tabla general y elegimos el borde de la tabla*/-->
+<tr> <!--Inicialización de estructura tabla (pantalla calc)*/-->
+<td colspan="5"> <!--Inicialización de estructura para celda que contiene datos. Adicional se fusionan 5 columnas*/-->
+    <input type="text" name="txtScreenNumros" value="0" disabled> <!--Declaración de valores para (pantalla calc)*/-->
+</td> <!--Finalización de estructura para celda que contiene datos*/-->
+</tr> <!--Finalización de estructura tabla (pantalla calc)*/-->
+
+<tr> <!--Inicialización de estructura tabla (botones)*/-->
+    <td><input type="button" value="1" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 1 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="2" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 2 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="3" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 3 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="+" onclick="enterOperation(this.value)"></td> <!--Creación de estructura boton con valor + y declaración de función correspondiente (enterOperation) a la hora de hacer click*/-->
+    <td><input type="button" value="-" onclick="enterOperation(this.value)"></td> <!--Creación de estructura boton con valor - y declaración de función correspondiente (enterOperation) a la hora de hacer click*/-->
+</tr> <!--Finalización de estructura tabla (botones)*/-->
+
+<tr> <!--Inicialización de estructura tabla (botones)*/-->
+    <td><input type="button" value="4" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 4 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="5" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 5 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="6" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 6 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="*" onclick="enterOperation(this.value)"></td> <!--Creación de estructura boton con valor + y declaración de función correspondiente (enterOperation) a la hora de hacer click*/-->
+    <td><input type="button" value="/" onclick="enterOperation(this.value)"></td> <!--Creación de estructura boton con valor / y declaración de función correspondiente (enterOperation) a la hora de hacer click*/-->
+</tr> <!--Finalización de estructura tabla (botones)*/-->
+
+<tr> <!--Inicialización de estructura tabla (botones)*/-->
+    <td><input type="button" value="7" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 7 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="8" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 8 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="9" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 9 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="^" onclick="enterOperation('**')"></td> <!--Creación de estructura boton con valor ^ y declaración de función correspondiente (enterOperation) a la hora de hacer click*/-->
+    <td><input type="button" value="√" onclick="squareRoot()"></td> <!--Creación de estructura boton con valor √ y declaración de función correspondiente (squareRoot) a la hora de hacer click*/-->
+</tr> <!--Finalización de estructura tabla (botones)*/-->
+
+<tr> <!--Inicialización de estructura tabla (botones)*/-->
+    <td><input type="button" value="0" onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor 0 y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="." onclick="enterNumber(this.value)"></td> <!--Creación de estructura boton con valor . y declaración de función correspondiente (enterNumber) a la hora de hacer click*/-->
+    <td><input type="button" value="C" onclick="clearScreen()"></td> <!--Creación de estructura boton con valor C y declaración de función correspondiente (clearScreen) a la hora de hacer click*/-->
+    <td colspan="2"><input type="button" value="      =      " onclick="result()"></td> <!--Creación de estructura boton, integrada en 2 columnas, con valor = y declaración de función correspondiente (result) a la hora de hacer click*/-->
+</tr> <!--Finalización de estructura tabla (botones)*/-->
+
+</table> <!--Finalización de estructura tabla general*/-->
+</form> <!--Finalización estructura formulario*/-->
+</center> <!--Finalización de la indicación centrar*/-->
+</body> <!--Finalización de configuración para el cuerpo de documento*/-->
+<center> <!--Indicación para centrar el contenido que sigue*/--> 
+<footer> <!--Habilitamos espacio para el pie de pagina-->
+    <div id = "titleFooter"> <!--Habilitamos espacio para el título y le asignamos identificador-->
+        <h4>Made with ❤ by Mariana, Sebastian, Yesika and Lina Cruz</h4> <!--Asignación de titulo en nivel 4-->
+    </div> <!--Cerramos espacio correspondiente al titulo-->
+</footer> <!--Cerramos espacio correspondiente al pie de pagina-->
+</center> <!--Finalización de la indicación centrar*/-->
+</html> <!--Finalización de configuración en la estructura del html*/-->
